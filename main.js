@@ -646,11 +646,31 @@ function closeProductDetailsPopup() {
 }
 window.closeProductDetailsPopup = closeProductDetailsPopup;
 
-/**
- * Mock lead capture system (resolves instantly to keep contact forms functional)
- */
 window.sendWhatsAppLeadNotification = (leadData) => {
-    console.log("[Mock Lead Capture] Lead captured successfully:", leadData);
+    console.log("[Lead Capture] Formulating WhatsApp message:", leadData);
+    
+    let message = `*Venzic Lifesciences - New B2B Inquiry*\n\n`;
+    message += `*Name:* ${leadData.name || 'Not provided'}\n`;
+    message += `*Mobile:* ${leadData.phone || 'Not provided'}\n`;
+    
+    if (leadData.email) {
+        message += `*Email:* ${leadData.email}\n`;
+    }
+    if (leadData.service) {
+        message += `*Service/Product:* ${leadData.service}\n`;
+    }
+    if (leadData.qty) {
+        message += `*Quantity:* ${leadData.qty}\n`;
+    }
+    if (leadData.message) {
+        message += `*Inquiry Details:* ${leadData.message}\n`;
+    }
+
+    const encodedText = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/919671055999?text=${encodedText}`;
+    
+    window.open(whatsappUrl, '_blank');
+    
     return Promise.resolve({ success: true });
 };
 
