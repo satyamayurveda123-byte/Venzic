@@ -1,9 +1,5 @@
+# OS generated files
 .DS_Store
-Thumbs.db
-*.bak
-*.log
-node_modules/
-.venv/
-env/
-venv/
-.env
+
+# Scratch scrapings
+scratch_html/
