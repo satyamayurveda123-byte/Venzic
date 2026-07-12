@@ -596,7 +596,7 @@ function openProductDetailsPopup(card) {
                             <ul id="popupProductSpecs"></ul>
                         </div>
                         <div class="popup-product-actions">
-                            <a href="https://www.indiamart.com/venzic-lifesciences-private-limited/our-products.html" target="_blank" rel="noopener" class="btn btn-outline btn-md" id="popupProductShopBtn">Shop Now</a>
+                            <a href="tel:+919671055999" class="btn btn-outline btn-md" id="popupProductShopBtn">Call Us</a>
                             <button id="popupProductWhatsappBtn" class="btn btn-primary btn-md btn-whatsapp">Order on WhatsApp</button>
                         </div>
                     </div>
