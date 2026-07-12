@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initScrollToTop();
     resolveActiveNavLink();
+    initProductDetailsModal();
 });
 
 /**
@@ -552,6 +553,98 @@ window.closeCertLightbox = () => {
         document.body.style.overflow = '';
     }
 };
+
+/**
+ * Product Details Modal Controller & Event Binding
+ */
+function initProductDetailsModal() {
+    document.addEventListener('click', (e) => {
+        // Trigger modal when clicking description or title
+        const trigger = e.target.closest('.product-desc, .product-title');
+        if (trigger) {
+            const card = trigger.closest('.product-card');
+            if (card) {
+                openProductDetailsPopup(card);
+            }
+        }
+    });
+}
+
+function openProductDetailsPopup(card) {
+    let modal = document.getElementById('productDetailsModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'productDetailsModal';
+        modal.className = 'product-details-modal';
+        modal.onclick = closeProductDetailsPopup;
+        modal.innerHTML = `
+            <div class="product-details-content" onclick="event.stopPropagation()">
+                <button class="close-modal-btn" onclick="closeProductDetailsPopup()">&times;</button>
+                <div class="product-details-grid">
+                    <div class="product-details-image">
+                        <img src="" id="popupProductImg" alt="">
+                    </div>
+                    <div class="product-details-info">
+                        <h3 id="popupProductTitle"></h3>
+                        <span class="popup-product-moq" id="popupProductMOQ"></span>
+                        <div class="popup-product-desc-wrapper">
+                            <h4>Description</h4>
+                            <p id="popupProductDesc"></p>
+                        </div>
+                        <div class="popup-product-specs-wrapper">
+                            <h4>Specifications</h4>
+                            <ul id="popupProductSpecs"></ul>
+                        </div>
+                        <div class="popup-product-actions">
+                            <a href="https://www.indiamart.com/venzic-lifesciences-private-limited/our-products.html" target="_blank" rel="noopener" class="btn btn-outline btn-md" id="popupProductShopBtn">Shop Now</a>
+                            <button id="popupProductWhatsappBtn" class="btn btn-primary btn-md btn-whatsapp">Order on WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    const title = card.querySelector('.product-title').innerText;
+    const desc = card.querySelector('.product-desc').innerText;
+    const imgUrl = card.querySelector('.product-card-image img').getAttribute('src');
+    const moq = card.querySelector('.product-min-qty') ? card.querySelector('.product-min-qty').innerText : 'Private Label MOQ Applies';
+    
+    const specItems = card.querySelectorAll('.product-specs li');
+    let specsHTML = '';
+    specItems.forEach(li => {
+        specsHTML += `<li>${li.innerHTML}</li>`;
+    });
+
+    document.getElementById('popupProductTitle').innerText = title;
+    document.getElementById('popupProductDesc').innerText = desc;
+    document.getElementById('popupProductImg').setAttribute('src', imgUrl);
+    document.getElementById('popupProductImg').setAttribute('alt', title);
+    document.getElementById('popupProductMOQ').innerText = moq.replace('Min. Order:', 'MOQ:').replace('Min Order:', 'MOQ:');
+    document.getElementById('popupProductSpecs').innerHTML = specsHTML;
+
+    // Link WhatsApp trigger
+    const waBtn = document.getElementById('popupProductWhatsappBtn');
+    waBtn.onclick = function() {
+        closeProductDetailsPopup();
+        if (typeof openInquiryModal === 'function') {
+            openInquiryModal(title, 'WhatsApp');
+        }
+    };
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeProductDetailsPopup() {
+    const modal = document.getElementById('productDetailsModal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+window.closeProductDetailsPopup = closeProductDetailsPopup;
 
 /**
  * Mock lead capture system (resolves instantly to keep contact forms functional)
