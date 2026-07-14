@@ -554,13 +554,12 @@ window.closeCertLightbox = () => {
     }
 };
 
-/**
- * Product Details Modal Controller & Event Binding
- */
+let currentProductCard = null;
+
 function initProductDetailsModal() {
     document.addEventListener('click', (e) => {
-        // Trigger modal when clicking description or title
-        const trigger = e.target.closest('.product-desc, .product-title');
+        // Trigger modal when clicking description, title, or product image
+        const trigger = e.target.closest('.product-desc, .product-title, .product-card-image');
         if (trigger) {
             const card = trigger.closest('.product-card');
             if (card) {
@@ -571,6 +570,7 @@ function initProductDetailsModal() {
 }
 
 function openProductDetailsPopup(card) {
+    currentProductCard = card;
     let modal = document.getElementById('productDetailsModal');
     if (!modal) {
         modal = document.createElement('div');
@@ -582,7 +582,9 @@ function openProductDetailsPopup(card) {
                 <button class="close-modal-btn" onclick="closeProductDetailsPopup()">&times;</button>
                 <div class="product-details-grid">
                     <div class="product-details-image">
+                        <button class="modal-nav-btn modal-prev-btn" onclick="navProductDetails('prev', event)" aria-label="Previous Product">&lsaquo;</button>
                         <img src="" id="popupProductImg" alt="">
+                        <button class="modal-nav-btn modal-next-btn" onclick="navProductDetails('next', event)" aria-label="Next Product">&rsaquo;</button>
                     </div>
                     <div class="product-details-info">
                         <h3 id="popupProductTitle"></h3>
@@ -624,6 +626,20 @@ function openProductDetailsPopup(card) {
     document.getElementById('popupProductMOQ').innerText = moq.replace('Min. Order:', 'MOQ:').replace('Min Order:', 'MOQ:');
     document.getElementById('popupProductSpecs').innerHTML = specsHTML;
 
+    // Toggle navigation chevrons display
+    const visibleCards = Array.from(document.querySelectorAll('.product-card')).filter(c => c.style.display !== 'none');
+    const prevBtn = modal.querySelector('.modal-prev-btn');
+    const nextBtn = modal.querySelector('.modal-next-btn');
+    if (prevBtn && nextBtn) {
+        if (visibleCards.length <= 1) {
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+        } else {
+            prevBtn.style.display = 'flex';
+            nextBtn.style.display = 'flex';
+        }
+    }
+
     // Link WhatsApp trigger
     const waBtn = document.getElementById('popupProductWhatsappBtn');
     waBtn.onclick = function() {
@@ -636,6 +652,24 @@ function openProductDetailsPopup(card) {
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
+
+window.navProductDetails = (direction, e) => {
+    if (e) e.stopPropagation();
+    const visibleCards = Array.from(document.querySelectorAll('.product-card')).filter(c => c.style.display !== 'none');
+    if (visibleCards.length <= 1) return;
+    
+    let index = visibleCards.indexOf(currentProductCard);
+    if (index === -1) return;
+    
+    let newIndex;
+    if (direction === 'next') {
+        newIndex = (index + 1) % visibleCards.length;
+    } else {
+        newIndex = (index - 1 + visibleCards.length) % visibleCards.length;
+    }
+    
+    openProductDetailsPopup(visibleCards[newIndex]);
+};
 
 function closeProductDetailsPopup() {
     const modal = document.getElementById('productDetailsModal');
