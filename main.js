@@ -581,10 +581,13 @@ function openProductDetailsPopup(card) {
             <div class="product-details-content" onclick="event.stopPropagation()">
                 <button class="close-modal-btn" onclick="closeProductDetailsPopup()">&times;</button>
                 <div class="product-details-grid">
-                    <div class="product-details-image">
-                        <button class="modal-nav-btn modal-prev-btn" onclick="navProductDetails('prev', event)" aria-label="Previous Product">&lsaquo;</button>
-                        <img src="" id="popupProductImg" alt="">
-                        <button class="modal-nav-btn modal-next-btn" onclick="navProductDetails('next', event)" aria-label="Next Product">&rsaquo;</button>
+                    <div class="product-details-image-wrapper">
+                        <div class="product-details-image">
+                            <button class="modal-nav-btn modal-prev-btn" onclick="navProductDetails('prev', event)" aria-label="Previous Product">&lsaquo;</button>
+                            <img src="" id="popupProductImg" alt="">
+                            <button class="modal-nav-btn modal-next-btn" onclick="navProductDetails('next', event)" aria-label="Next Product">&rsaquo;</button>
+                        </div>
+                        <div class="product-details-thumbs" id="popupProductThumbs"></div>
                     </div>
                     <div class="product-details-info">
                         <h3 id="popupProductTitle"></h3>
@@ -626,6 +629,24 @@ function openProductDetailsPopup(card) {
     document.getElementById('popupProductMOQ').innerText = moq.replace('Min. Order:', 'MOQ:').replace('Min Order:', 'MOQ:');
     document.getElementById('popupProductSpecs').innerHTML = specsHTML;
 
+    // Render image gallery thumbnails
+    const imagesAttr = card.getAttribute('data-images') || '';
+    const imgUrls = imagesAttr ? imagesAttr.split(',') : [imgUrl];
+    const thumbsContainer = document.getElementById('popupProductThumbs');
+    if (thumbsContainer) {
+        if (imgUrls.length > 1) {
+            let thumbsHTML = '';
+            imgUrls.forEach((url, index) => {
+                thumbsHTML += `<img src="${url}" class="popup-thumb-img ${index === 0 ? 'active' : ''}" onclick="setPopupMainImg('${url}', this, event)" alt="Thumbnail ${index + 1}">`;
+            });
+            thumbsContainer.innerHTML = thumbsHTML;
+            thumbsContainer.style.display = 'flex';
+        } else {
+            thumbsContainer.innerHTML = '';
+            thumbsContainer.style.display = 'none';
+        }
+    }
+
     // Toggle navigation chevrons display
     const visibleCards = Array.from(document.querySelectorAll('.product-card')).filter(c => c.style.display !== 'none');
     const prevBtn = modal.querySelector('.modal-prev-btn');
@@ -652,6 +673,19 @@ function openProductDetailsPopup(card) {
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
+
+window.setPopupMainImg = (url, thumbEl, e) => {
+    if (e) e.stopPropagation();
+    const mainImg = document.getElementById('popupProductImg');
+    if (mainImg) {
+        mainImg.setAttribute('src', url);
+    }
+    const thumbs = document.querySelectorAll('.popup-thumb-img');
+    thumbs.forEach(t => t.classList.remove('active'));
+    if (thumbEl) {
+        thumbEl.classList.add('active');
+    }
+};
 
 window.navProductDetails = (direction, e) => {
     if (e) e.stopPropagation();
