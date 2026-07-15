@@ -593,7 +593,10 @@ function openProductDetailsPopup(card) {
                         </div>
                         <div class="product-details-info">
                             <h3 id="popupProductTitle"></h3>
-                            <span class="popup-product-moq" id="popupProductMOQ"></span>
+                            <div style="display: flex; align-items: baseline; gap: 12px; margin-block: 8px 16px;">
+                                <span class="popup-product-price" id="popupProductPrice"></span>
+                                <span class="popup-product-moq" id="popupProductMOQ"></span>
+                            </div>
                             <div class="popup-product-desc-wrapper">
                                 <h4>Description</h4>
                                 <p id="popupProductDesc"></p>
@@ -617,6 +620,7 @@ function openProductDetailsPopup(card) {
     const title = card.querySelector('.product-title').innerText;
     const desc = card.querySelector('.product-desc').innerText;
     const imgUrl = card.querySelector('.product-card-image img').getAttribute('src');
+    const price = card.querySelector('.product-price') ? card.querySelector('.product-price').innerText : '';
     const moq = card.querySelector('.product-min-qty') ? card.querySelector('.product-min-qty').innerText : 'Private Label MOQ Applies';
     
     const specItems = card.querySelectorAll('.product-specs li');
@@ -629,6 +633,13 @@ function openProductDetailsPopup(card) {
     document.getElementById('popupProductDesc').innerText = desc;
     document.getElementById('popupProductImg').setAttribute('src', imgUrl);
     document.getElementById('popupProductImg').setAttribute('alt', title);
+    
+    const popupPriceEl = document.getElementById('popupProductPrice');
+    if (popupPriceEl) {
+        popupPriceEl.innerText = price;
+        popupPriceEl.style.display = price ? 'inline-block' : 'none';
+    }
+    
     document.getElementById('popupProductMOQ').innerText = moq.replace('Min. Order:', 'MOQ:').replace('Min Order:', 'MOQ:');
     document.getElementById('popupProductSpecs').innerHTML = specsHTML;
 

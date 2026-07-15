@@ -1119,6 +1119,22 @@
         letter-spacing: 0.02em;
     }
     
+    .product-price {
+        font-size: 16px !important;
+        font-weight: 800 !important;
+        color: var(--color-primary) !important;
+        font-family: var(--font-display) !important;
+        letter-spacing: -0.015em !important;
+    }
+    
+    .popup-product-price {
+        font-size: 22px !important;
+        font-weight: 800 !important;
+        color: var(--color-primary) !important;
+        font-family: var(--font-display) !important;
+        letter-spacing: -0.015em !important;
+    }
+    
     /* No results style */
     .no-results {
         text-align: center;
