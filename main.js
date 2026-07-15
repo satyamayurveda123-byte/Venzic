@@ -746,59 +746,170 @@ window.sendWhatsAppLeadNotification = (leadData) => {
 };
 
 /**
- * Auto-rotating Hero Slideshow
+ * Auto-rotating Hero Slideshow with Touch swipe gesture support for mobile view only
  */
 function initHeroSlider() {
     const sliderImg = document.getElementById('hero-slider-img');
     const sliderBadge = document.getElementById('hero-slider-badge');
     const sliderTitle = document.getElementById('hero-slider-title');
     const sliderDesc = document.getElementById('hero-slider-desc');
+    const sliderCard = document.getElementById('hero-slider-card');
     
-    if (!sliderImg || !sliderBadge || !sliderTitle || !sliderDesc) return;
+    if (!sliderImg || !sliderBadge || !sliderTitle || !sliderDesc || !sliderCard) return;
     
     const slides = [
         {
-            img: "https://5.imimg.com/data5/SELLER/Default/2026/1/576055496/RP/KD/ZN/258108820/product-2-500x500.jpg",
-            badge: "Himalayan Shilajit",
-            title: "Pure Himalayan Shilajit Honey Sticks",
-            desc: "Premium energy booster packed for modern ease."
+            "img": "https://5.imimg.com/data5/SELLER/Default/2026/1/576055496/RP/KD/ZN/258108820/product-2-500x500.jpg",
+            "badge": "Shilajit Honey",
+            "title": "Pure Himalayan Shilajit Honey Sticks",
+            "desc": "Premium energy booster packed for modern ease."
         },
         {
-            img: "https://5.imimg.com/data5/SELLER/Default/2026/1/576202074/CM/XO/HD/258108820/shilajit-extract-500x500.jpg",
-            badge: "Herbal Extracts Capsule",
-            title: "Shilajit Extract Capsule",
-            desc: "Standardized to 20-60% Fulvic Acid with 80+ trace minerals."
+            "img": "https://5.imimg.com/data5/SELLER/Default/2026/1/576198022/ZU/DO/FI/258108820/arjun-extract-500x500.jpg",
+            "badge": "Herbal Extracts",
+            "title": "Arjuna Extract Capsule",
+            "desc": "Arjun (Terminalia arjuna) extract capsules are widely used in Ayurvedic medicine as a potent cardiovascular tonic."
         },
         {
-            img: "https://5.imimg.com/data5/ANDROID/Default/2026/1/578532812/ZV/NM/IE/258108820/product-jpeg-500x500.jpg",
-            badge: "Shilajit Resin",
-            title: "Himalayan Shilajit Resin (Gold Grade)",
-            desc: "Premium purified Ayurvedic Shilajit resin extracted above 16,000 feet."
+            "img": "https://5.imimg.com/data5/ANDROID/Default/2026/1/579039819/LK/WY/RD/258108820/product-jpeg-500x500.jpg",
+            "badge": "Herbal Extracts",
+            "title": "Ashwagandha Extract Capsule",
+            "desc": "Ashwagandha (Withania somnifera) is one of the most popular herbs in Ayurveda, traditionally classified as Rasayana."
         },
         {
-            img: "https://5.imimg.com/data5/SELLER/Default/2026/1/576168640/AB/PB/AB/258108820/korean-beauty-500x500.jpg",
-            badge: "Herbal Skincare",
-            title: "Korean Beauty Cream",
-            desc: "Niacinamide, Rice and Centella extracts for glass skin hydration."
+            "img": "https://5.imimg.com/data5/SELLER/Default/2026/1/576198157/OK/ZS/QI/258108820/berberine-500x500.jpg",
+            "badge": "Herbal Extracts",
+            "title": "Berberine Extracts Capsule",
+            "desc": "Berberine is a bioactive compound extracted from several plants that helps maintain healthy metabolic levels."
         },
         {
-            img: "https://5.imimg.com/data5/SELLER/Default/2026/1/576188437/EJ/ID/DD/258108820/women-libido-enhancement-capsule-third-party-manufacturer-500x500.jpg",
-            badge: "Herbal Vitality",
-            title: "Women Libido Enhancement Capsule",
-            desc: "Specially formulated to support female vitality and energy."
+            "img": "https://5.imimg.com/data5/SELLER/Default/2026/1/576188145/MK/WE/SM/258108820/all-join-pain-free-capsule-third-party-manufacturer-500x500.jpg",
+            "badge": "Herbal Vitality",
+            "title": "All Joint Pain Free Capsule",
+            "desc": "Herbal joint pain capsules share a common set of active ingredients to support daily joint mobility."
         },
         {
-            img: "https://5.imimg.com/data5/ANDROID/Default/2026/1/577964372/JW/CA/BS/258108820/product-jpeg-500x500.jpg",
-            badge: "Mushroom Extracts",
-            title: "Ganoderma Extracts Capsule",
-            desc: "Triple purified Ganoderma extracts for immune system support."
+            "img": "https://5.imimg.com/data5/SELLER/Default/2026/1/576183059/VY/PE/OS/258108820/asthma-allergy-500x500.jpg",
+            "badge": "Herbal Vitality",
+            "title": "Asthma Allergy Capsule",
+            "desc": "Herbal capsules for asthma and allergies combining Ayurvedic and botanical bronchial-supportive extracts."
+        },
+        {
+            "img": "https://5.imimg.com/data5/SELLER/Default/2026/1/576183182/LU/KF/YH/258108820/cyst-remover-500x500.jpg",
+            "badge": "Herbal Vitality",
+            "title": "Cyst Remover Capsule",
+            "desc": "Herbal capsules for cyst removal relying on traditional Ayurvedic formulations to support endocrine balance."
+        },
+        {
+            "img": "https://5.imimg.com/data5/ANDROID/Default/2026/1/577377330/ER/FZ/VT/258108820/product-jpeg-500x500.jpg",
+            "badge": "Himalayan Shilajit",
+            "title": "Pure Himalayan Shilajit (Premium Rock)",
+            "desc": "Premium raw purified Himalayan Shilajit sourced from high-altitude ranges, triple purified in bulk."
+        },
+        {
+            "img": "https://5.imimg.com/data5/ANDROID/Default/2026/1/577378764/JQ/PJ/ZL/258108820/product-jpeg-500x500.jpg",
+            "badge": "Himalayan Shilajit",
+            "title": "Pure Himalayan Shilajit (Clay Pot)",
+            "desc": "Ayurvedic semi-liquid Shilajit resin packaged inside a traditional clay pot to preserve active trace minerals."
+        },
+        {
+            "img": "https://5.imimg.com/data5/ANDROID/Default/2026/1/577378338/SP/CN/NU/258108820/product-jpeg-500x500.jpg",
+            "badge": "Himalayan Shilajit",
+            "title": "Pure Himalayan Shilajit (Liquid Form)",
+            "desc": "100% natural water-soluble liquid Shilajit extract for enhanced bioavailability and organic absorption."
+        },
+        {
+            "img": "https://5.imimg.com/data5/SELLER/Default/2026/1/576170420/WJ/OJ/IM/258108820/skin-weight-cream-500x500.jpg",
+            "badge": "Herbal Skincare",
+            "title": "Skin Whitening Cream",
+            "desc": "Organic skin brightening cream formulated with Kojic Acid, Glutathione, and natural botanical extracts."
+        },
+        {
+            "img": "https://5.imimg.com/data5/SELLER/Default/2026/1/576168640/AB/PB/AB/258108820/korean-beauty-500x500.jpg",
+            "badge": "Herbal Skincare",
+            "title": "Korean Beauty Cream",
+            "desc": "Formulated using premium glass skin principles. Rich in Niacinamide, Rice extracts and Centella Asiatica."
+        },
+        {
+            "img": "https://5.imimg.com/data5/SELLER/Default/2026/1/576170364/FT/JK/BP/258108820/pigmentation-cream-500x500.jpg",
+            "badge": "Herbal Skincare",
+            "title": "Pigmentation Melasma Cream",
+            "desc": "High potency cosmetic treatment targeting hyperpigmentation, age spots, melasma patches and blemishes."
+        },
+        {
+            "img": "images/mushroom-costus-igneus.jpg",
+            "badge": "Herbal Extracts",
+            "title": "Costus Igneus Sugar Plant Capsule",
+            "desc": "Costus Igneus, commonly known as the 'Insulin Plant', used to support healthy blood sugar regulation."
+        },
+        {
+            "img": "images/mushroom-cordyceps-militaris.jpg",
+            "badge": "Mushroom Wellness",
+            "title": "Cordyceps Militaris Extract Capsule",
+            "desc": "Medicinal fungus extract capsules widely recognized for supporting daily energy, ATP production, and stamina."
+        },
+        {
+            "img": "images/mushroom-ganoderma.jpg",
+            "badge": "Mushroom Wellness",
+            "title": "Ganoderma Extracts Capsule",
+            "desc": "Ganoderma lucidum, also known as Reishi mushroom, used to support overall immunity and cellular health."
+        },
+        {
+            "img": "https://5.imimg.com/data5/ANDROID/Default/2026/1/579018148/UN/SI/BK/258108820/product-jpeg-500x500.jpg",
+            "badge": "Mushroom Extracts",
+            "title": "Cordyceps Militaris Extract",
+            "desc": "Highly concentrated Cordyceps Militaris botanical extract powder. Crafted to support cellular vitality."
+        },
+        {
+            "img": "https://5.imimg.com/data5/ANDROID/Default/2026/1/579018112/SN/MM/LK/258108820/product-jpeg-500x500.jpg",
+            "badge": "Raw Mushrooms",
+            "title": "Dried Cordyceps Militaris",
+            "desc": "Whole dried fruiting bodies of Cordyceps Militaris. Cultivated in climate-controlled indoor clean rooms."
+        },
+        {
+            "img": "https://5.imimg.com/data5/ANDROID/Default/2026/1/576970750/UI/ME/GG/258108820/product-jpeg-500x500.jpeg",
+            "badge": "Raw Mushrooms",
+            "title": "Cordyceps Sinensis Yarsagumba",
+            "desc": "Authentic whole dried Himalayan Cordyceps Sinensis (Keeda Jadi) for immune wellness and longevity."
+        },
+        {
+            "img": "https://5.imimg.com/data5/ANDROID/Default/2026/1/576911570/MT/RY/DB/258108820/product-jpeg-500x500.jpg",
+            "badge": "Raw Mushrooms",
+            "title": "Cordyceps Keeda Jadi",
+            "desc": "Premium wild Grade-A Himalayan Keeda Jadi. Expertly dried and stored under strict nitrogen-purged conditions."
+        },
+        {
+            "img": "https://5.imimg.com/data5/SELLER/Default/2026/1/576054978/AT/IQ/NV/258108820/product-3-500x500.jpg",
+            "badge": "Ayurvedic Medicine",
+            "title": "500 Gm Ayurvedic Chyawanprash",
+            "desc": "Traditional Ayurvedic herbal jam (Avleh) based on Amla, rich in Vitamin C, designed to support immunity."
+        },
+        {
+            "img": "images/swarnaprash-extra-power-new.png",
+            "badge": "Ayurvedic Medicine",
+            "title": "Swarnaprash Extra Power",
+            "desc": "Traditional Ayurvedic immunizer and brain tonic in micronized powder form designed for children."
+        },
+        {
+            "img": "https://5.imimg.com/data5/SELLER/Default/2026/1/576055182/JT/BF/RF/258108820/product-1-500x500.jpg",
+            "badge": "Wellness Oils",
+            "title": "Healthy Hair Growth Oil",
+            "desc": "Ayurvedic formulation for scalp nourishment and hair strength, rich in Bhringraj and Rosemary Oil."
+        },
+        {
+            "img": "https://5.imimg.com/data5/SELLER/Default/2026/1/576166306/YV/UC/VM/258108820/pain-free-oil-3d-500x500.jpg",
+            "badge": "Wellness Oils",
+            "title": "Pain Free Oil",
+            "desc": "Highly effective Ayurvedic massage oil for joint pain relief, sprain relief, and sports injury recovery."
         }
     ];
     
     let currentSlide = 0;
+    let slideInterval;
+    const intervalDuration = 2000; // 2 seconds
     
-    function nextSlide() {
-        currentSlide = (currentSlide + 1) % slides.length;
+    function updateSlide(index) {
+        currentSlide = index;
         
         // Add fade class
         sliderImg.classList.add('hero-slider-fade');
@@ -818,11 +929,61 @@ function initHeroSlider() {
             sliderBadge.classList.remove('hero-slider-fade');
             sliderTitle.classList.remove('hero-slider-fade');
             sliderDesc.classList.remove('hero-slider-fade');
-        }, 300); // matches the transition timing
+        }, 300);
     }
     
-    // Auto-slide every 2 seconds
-    setInterval(nextSlide, 2000);
+    function nextSlide() {
+        const nextIndex = (currentSlide + 1) % slides.length;
+        updateSlide(nextIndex);
+    }
+    
+    function prevSlide() {
+        const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+        updateSlide(prevIndex);
+    }
+    
+    function startAutoSlide() {
+        stopAutoSlide();
+        slideInterval = setInterval(nextSlide, intervalDuration);
+    }
+    
+    function stopAutoSlide() {
+        if (slideInterval) {
+            clearInterval(slideInterval);
+        }
+    }
+    
+    // Start automatic sliding
+    startAutoSlide();
+    
+    // Touch Swipe Gestures (Mobile View Only: viewport width <= 768)
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    sliderCard.addEventListener('touchstart', (e) => {
+        if (window.innerWidth > 768) return;
+        touchStartX = e.changedTouches[0].clientX;
+    }, { passive: true });
+    
+    sliderCard.addEventListener('touchend', (e) => {
+        if (window.innerWidth > 768) return;
+        touchEndX = e.changedTouches[0].clientX;
+        handleSwipe();
+    }, { passive: true });
+    
+    function handleSwipe() {
+        const diffX = touchEndX - touchStartX;
+        // Require at least 50px of horizontal drag to avoid accidental swipes
+        if (Math.abs(diffX) > 50) {
+            stopAutoSlide(); // Pause automatic interval
+            if (diffX < 0) {
+                nextSlide(); // Swiped left -> Show next
+            } else {
+                prevSlide(); // Swiped right -> Show previous
+            }
+            startAutoSlide(); // Resume automatic interval
+        }
+    }
 }
 
 
