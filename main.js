@@ -821,8 +821,8 @@ function initHeroSlider() {
         }, 300); // matches the transition timing
     }
     
-    // Auto-slide every 2.5 seconds
-    setInterval(nextSlide, 2500);
+    // Auto-slide every 2 seconds
+    setInterval(nextSlide, 2000);
 }
 
 
