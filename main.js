@@ -782,7 +782,7 @@ function initHeroSlider() {
             desc: "Niacinamide, Rice and Centella extracts for glass skin hydration."
         },
         {
-            img: "https://5.imimg.com/data5/SELLER/Default/2026/1/576198333/XW/QO/SB/258108820/women-libido-500x500.jpg",
+            img: "https://5.imimg.com/data5/SELLER/Default/2026/1/576188437/EJ/ID/DD/258108820/women-libido-enhancement-capsule-third-party-manufacturer-500x500.jpg",
             badge: "Herbal Vitality",
             title: "Women Libido Enhancement Capsule",
             desc: "Specially formulated to support female vitality and energy."
