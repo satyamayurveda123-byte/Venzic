@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollToTop();
     resolveActiveNavLink();
     initProductDetailsModal();
+    initHeroSlider();
 });
 
 /**
@@ -743,6 +744,86 @@ window.sendWhatsAppLeadNotification = (leadData) => {
     
     return Promise.resolve({ success: true });
 };
+
+/**
+ * Auto-rotating Hero Slideshow
+ */
+function initHeroSlider() {
+    const sliderImg = document.getElementById('hero-slider-img');
+    const sliderBadge = document.getElementById('hero-slider-badge');
+    const sliderTitle = document.getElementById('hero-slider-title');
+    const sliderDesc = document.getElementById('hero-slider-desc');
+    
+    if (!sliderImg || !sliderBadge || !sliderTitle || !sliderDesc) return;
+    
+    const slides = [
+        {
+            img: "https://5.imimg.com/data5/SELLER/Default/2026/1/576055496/RP/KD/ZN/258108820/product-2-500x500.jpg",
+            badge: "Himalayan Shilajit",
+            title: "Pure Himalayan Shilajit Honey Sticks",
+            desc: "Premium energy booster packed for modern ease."
+        },
+        {
+            img: "https://5.imimg.com/data5/SELLER/Default/2026/1/576202074/CM/XO/HD/258108820/shilajit-extract-500x500.jpg",
+            badge: "Herbal Extracts Capsule",
+            title: "Shilajit Extract Capsule",
+            desc: "Standardized to 20-60% Fulvic Acid with 80+ trace minerals."
+        },
+        {
+            img: "https://5.imimg.com/data5/ANDROID/Default/2026/1/578532812/ZV/NM/IE/258108820/product-jpeg-500x500.jpg",
+            badge: "Shilajit Resin",
+            title: "Himalayan Shilajit Resin (Gold Grade)",
+            desc: "Premium purified Ayurvedic Shilajit resin extracted above 16,000 feet."
+        },
+        {
+            img: "https://5.imimg.com/data5/SELLER/Default/2026/1/576168640/AB/PB/AB/258108820/korean-beauty-500x500.jpg",
+            badge: "Herbal Skincare",
+            title: "Korean Beauty Cream",
+            desc: "Niacinamide, Rice and Centella extracts for glass skin hydration."
+        },
+        {
+            img: "https://5.imimg.com/data5/SELLER/Default/2026/1/576198333/XW/QO/SB/258108820/women-libido-500x500.jpg",
+            badge: "Herbal Vitality",
+            title: "Women Libido Enhancement Capsule",
+            desc: "Specially formulated to support female vitality and energy."
+        },
+        {
+            img: "https://5.imimg.com/data5/ANDROID/Default/2026/1/577964372/JW/CA/BS/258108820/product-jpeg-500x500.jpg",
+            badge: "Mushroom Extracts",
+            title: "Ganoderma Extracts Capsule",
+            desc: "Triple purified Ganoderma extracts for immune system support."
+        }
+    ];
+    
+    let currentSlide = 0;
+    
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        
+        // Add fade class
+        sliderImg.classList.add('hero-slider-fade');
+        sliderBadge.classList.add('hero-slider-fade');
+        sliderTitle.classList.add('hero-slider-fade');
+        sliderDesc.classList.add('hero-slider-fade');
+        
+        setTimeout(() => {
+            const slide = slides[currentSlide];
+            sliderImg.setAttribute('src', slide.img);
+            sliderBadge.textContent = slide.badge;
+            sliderTitle.textContent = slide.title;
+            sliderDesc.textContent = slide.desc;
+            
+            // Remove fade class to fade back in
+            sliderImg.classList.remove('hero-slider-fade');
+            sliderBadge.classList.remove('hero-slider-fade');
+            sliderTitle.classList.remove('hero-slider-fade');
+            sliderDesc.classList.remove('hero-slider-fade');
+        }, 300); // matches the transition timing
+    }
+    
+    // Auto-slide every 4 seconds
+    setInterval(nextSlide, 4000);
+}
 
 
 

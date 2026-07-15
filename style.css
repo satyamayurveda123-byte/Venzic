@@ -3043,5 +3043,19 @@
     color: var(--color-primary);
 }
 
+/* Auto-rotating hero slider transition */
+#hero-slider-img, 
+#hero-slider-badge, 
+#hero-slider-title, 
+#hero-slider-desc {
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    will-change: opacity, transform;
+}
+
+.hero-slider-fade {
+    opacity: 0 !important;
+    transform: translateY(4px);
+}
+
 
 
