@@ -578,31 +578,33 @@ function openProductDetailsPopup(card) {
         modal.className = 'product-details-modal';
         modal.onclick = closeProductDetailsPopup;
         modal.innerHTML = `
-            <div class="product-details-content" onclick="event.stopPropagation()">
+            <div class="product-details-container" onclick="event.stopPropagation()">
                 <button class="close-modal-btn" onclick="closeProductDetailsPopup()">&times;</button>
-                <div class="product-details-grid">
-                    <div class="product-details-image-wrapper">
-                        <div class="product-details-image">
-                            <button class="modal-nav-btn modal-prev-btn" onclick="navProductDetails('prev', event)" aria-label="Previous Product">&lsaquo;</button>
-                            <img src="" id="popupProductImg" alt="">
-                            <button class="modal-nav-btn modal-next-btn" onclick="navProductDetails('next', event)" aria-label="Next Product">&rsaquo;</button>
+                <div class="product-details-content">
+                    <div class="product-details-grid">
+                        <div class="product-details-image-wrapper">
+                            <div class="product-details-image">
+                                <button class="modal-nav-btn modal-prev-btn" onclick="navProductDetails('prev', event)" aria-label="Previous Product">&lsaquo;</button>
+                                <img src="" id="popupProductImg" alt="">
+                                <button class="modal-nav-btn modal-next-btn" onclick="navProductDetails('next', event)" aria-label="Next Product">&rsaquo;</button>
+                            </div>
+                            <div class="product-details-thumbs" id="popupProductThumbs"></div>
                         </div>
-                        <div class="product-details-thumbs" id="popupProductThumbs"></div>
-                    </div>
-                    <div class="product-details-info">
-                        <h3 id="popupProductTitle"></h3>
-                        <span class="popup-product-moq" id="popupProductMOQ"></span>
-                        <div class="popup-product-desc-wrapper">
-                            <h4>Description</h4>
-                            <p id="popupProductDesc"></p>
-                        </div>
-                        <div class="popup-product-specs-wrapper">
-                            <h4>Specifications</h4>
-                            <ul id="popupProductSpecs"></ul>
-                        </div>
-                        <div class="popup-product-actions">
-                            <a href="tel:+919671055999" class="btn btn-outline btn-md" id="popupProductShopBtn">Call Us</a>
-                            <button id="popupProductWhatsappBtn" class="btn btn-primary btn-md btn-whatsapp">Order on WhatsApp</button>
+                        <div class="product-details-info">
+                            <h3 id="popupProductTitle"></h3>
+                            <span class="popup-product-moq" id="popupProductMOQ"></span>
+                            <div class="popup-product-desc-wrapper">
+                                <h4>Description</h4>
+                                <p id="popupProductDesc"></p>
+                            </div>
+                            <div class="popup-product-specs-wrapper">
+                                <h4>Specifications</h4>
+                                <ul id="popupProductSpecs"></ul>
+                            </div>
+                            <div class="popup-product-actions">
+                                <a href="tel:+919671055999" class="btn btn-outline btn-md" id="popupProductShopBtn">Call Us</a>
+                                <button id="popupProductWhatsappBtn" class="btn btn-primary btn-md btn-whatsapp">Order on WhatsApp</button>
+                            </div>
                         </div>
                     </div>
                 </div>
