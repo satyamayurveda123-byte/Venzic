@@ -2878,6 +2878,13 @@
 }
 
 @media (max-width: 768px) {
+    .container {
+        padding-inline: 16px !important;
+    }
+    .product-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
     .close-modal-btn {
         top: 12px;
         right: 12px;
