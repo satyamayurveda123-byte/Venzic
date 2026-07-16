@@ -1881,19 +1881,26 @@
     }
     
     .category-menu {
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 10px;
+        flex-direction: column;
+        gap: 8px;
     }
 
     .category-btn {
-        width: auto;
+        width: 100%;
     }
 
     .category-btn.active {
-        border-left: none;
-        border-bottom: 3px solid var(--color-primary);
-        padding-inline-start: 16px;
+        border-left: 4px solid var(--color-primary);
+        border-bottom: none;
+        background: var(--color-bg);
+        color: var(--color-primary);
+    }
+
+    .scroll-to-top {
+        bottom: 85px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
     }
 
     .sidebar-b2b-card {
