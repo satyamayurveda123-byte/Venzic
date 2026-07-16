@@ -2885,6 +2885,15 @@
         grid-template-columns: 1fr !important;
         gap: 20px !important;
     }
+    .product-specs {
+        min-height: auto !important;
+    }
+    .product-specs li {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 2px !important;
+        text-align: left !important;
+    }
     .close-modal-btn {
         top: 12px;
         right: 12px;
