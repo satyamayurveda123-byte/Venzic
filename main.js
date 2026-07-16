@@ -32,6 +32,15 @@ function initMobileMenu() {
         }
     });
 
+    const closeBtn = document.querySelector('.mobile-menu-close');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            mainNav.classList.remove('open');
+            toggleBtn.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        });
+    }
+
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
             if (mainNav.classList.contains('open')) {

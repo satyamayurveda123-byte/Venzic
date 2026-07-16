@@ -189,6 +189,10 @@
         display: none;
     }
 
+    .mobile-menu-close {
+        display: none;
+    }
+
     .header-container {
         display: flex;
         align-items: center;
@@ -1939,6 +1943,30 @@
         background: transparent;
         border: none;
         z-index: 110;
+    }
+
+    .mobile-menu-close {
+        display: flex;
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 36px;
+        cursor: pointer;
+        line-height: 1;
+        z-index: 115;
+        width: 44px;
+        height: 44px;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.8;
+        transition: opacity 0.2s ease;
+    }
+
+    .mobile-menu-close:hover {
+        opacity: 1;
     }
 
     .hamburger-line {
