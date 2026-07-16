@@ -2863,6 +2863,11 @@
         grid-template-columns: 1fr;
         gap: 24px;
     }
+    .product-card-footer > div:first-of-type {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 6px !important;
+    }
 }
 
 .product-details-image {
